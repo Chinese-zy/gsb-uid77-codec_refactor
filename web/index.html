@@ -10,7 +10,9 @@
     select { font: inherit; padding: 4px 8px; }
     li { margin: 6px 0; }
     pre { background: #fff; border: 1px solid #e7e5e4; padding: 12px; white-space: pre-wrap; min-height: 220px; }
-    .hex { grid-column: 1 / -1; color: #57534e; word-break: break-all; }
+    .hex { grid-column: 1 / -1; color: #57534e; white-space: pre; }
+    #parity.ok { color: #166534; }
+    #parity.bad { color: #b91c1c; }
   </style>
 </head>
 <body>
@@ -37,8 +39,10 @@
       <h1>接口</h1>
       <pre id="api"></pre>
     </section>
-    <p class="hex" id="hex"></p>
+    <pre class="hex" id="hex"></pre>
+    <p class="hex" id="parity"></p>
   </main>
+  <script src="codec.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
