@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>报文</title>
+  <style>
+    body { margin: 0; background: #f4f1ea; color: #1c1917; font: 15px/1.45 "Songti SC", serif; }
+    main { display: grid; grid-template-columns: 220px 1fr 1fr; gap: 18px; padding: 20px; }
+    h1 { font-size: 18px; margin: 0 0 10px; }
+    select { font: inherit; padding: 4px 8px; }
+    li { margin: 6px 0; }
+    pre { background: #fff; border: 1px solid #e7e5e4; padding: 12px; white-space: pre-wrap; min-height: 220px; }
+    .hex { grid-column: 1 / -1; color: #57534e; word-break: break-all; }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>名单</h1>
+      <select id="sieve">
+        <option value="全部">全部</option>
+        <option value="电压">电压</option>
+        <option value="温度">温度</option>
+        <option value="成组">成组</option>
+      </select>
+      <ul id="list">
+        <li data-kind="电压">电压帧</li>
+        <li data-kind="温度">温度帧</li>
+        <li data-kind="成组">成组帧</li>
+      </ul>
+    </section>
+    <section>
+      <h1>页面</h1>
+      <pre id="page"></pre>
+    </section>
+    <section>
+      <h1>接口</h1>
+      <pre id="api"></pre>
+    </section>
+    <p class="hex" id="hex"></p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
