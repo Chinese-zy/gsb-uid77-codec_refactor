@@ -1,0 +1,137 @@
+{
+  "cases": [
+    {
+      "name": "sample.bin 完整报文",
+      "hex": "01 00 02 03 18 03 01 05 00 00 00 04 01 06 00 00 00 05 01 07 00 00 00 06 01 08 00 00 00 01 01 e8 03 00 00 08 01 03 00 00 00 96 01 01 07 00 00 00",
+      "expect": {
+        "version": 1,
+        "fields": [
+          {
+            "name": "成组",
+            "value": [
+              { "name": "湿度", "value": 5 },
+              { "name": "气压", "value": 6 },
+              { "name": "风速", "value": 7 },
+              { "name": "云量", "value": 8 }
+            ]
+          },
+          { "name": "电压", "value": 1000 },
+          { "name": "计数", "value": 3 },
+          { "name": "温度", "value": 7 }
+        ]
+      }
+    },
+    {
+      "name": "空输入",
+      "hex": "",
+      "expect": { "version": 0, "fields": [] }
+    },
+    {
+      "name": "只有版本号",
+      "hex": "01 00",
+      "expect": { "version": 1, "fields": [] }
+    },
+    {
+      "name": "单个电压字段",
+      "hex": "01 00 01 01 e8 03 00 00",
+      "expect": {
+        "version": 1,
+        "fields": [{ "name": "电压", "value": 1000 }]
+      }
+    },
+    {
+      "name": "重复字段保持上线顺序",
+      "hex": "01 00 01 01 01 00 00 00 01 01 02 00 00 00 08 01 03 00 00 00",
+      "expect": {
+        "version": 1,
+        "fields": [
+          { "name": "电压", "value": 1 },
+          { "name": "电压", "value": 2 },
+          { "name": "计数", "value": 3 }
+        ]
+      }
+    },
+    {
+      "name": "嵌套成组",
+      "hex": "01 00 02 03 06 03 01 05 00 00 00",
+      "expect": {
+        "version": 1,
+        "fields": [
+          {
+            "name": "成组",
+            "value": [{ "name": "湿度", "value": 5 }]
+          }
+        ]
+      }
+    },
+    {
+      "name": "嵌套内重复字段保持上线顺序",
+      "hex": "01 00 02 03 0c 01 01 01 00 00 00 01 01 02 00 00 00",
+      "expect": {
+        "version": 1,
+        "fields": [
+          {
+            "name": "成组",
+            "value": [
+              { "name": "电压", "value": 1 },
+              { "name": "电压", "value": 2 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "空嵌套输出空数组",
+      "hex": "01 00 02 03 00",
+      "expect": {
+        "version": 1,
+        "fields": [{ "name": "成组", "value": [] }]
+      }
+    },
+    {
+      "name": "未知字段名",
+      "hex": "01 00 09 01 2a 00 00 00",
+      "expect": {
+        "version": 1,
+        "fields": [{ "name": "未知", "value": 42 }]
+      }
+    },
+    {
+      "name": "变长整数跨两字节",
+      "hex": "01 00 96 01 01 07 00 00 00",
+      "expect": {
+        "version": 1,
+        "fields": [{ "name": "温度", "value": 7 }]
+      }
+    },
+    {
+      "name": "未知类型停止解析",
+      "hex": "01 00 01 01 05 00 00 00 01 09 ff ff",
+      "expect": {
+        "version": 1,
+        "fields": [{ "name": "电压", "value": 5 }]
+      }
+    },
+    {
+      "name": "u32 截断停止解析",
+      "hex": "01 00 08 01 03 00 00 00 01 01 05 00",
+      "expect": {
+        "version": 1,
+        "fields": [{ "name": "计数", "value": 3 }]
+      }
+    },
+    {
+      "name": "嵌套长度越界停止解析",
+      "hex": "01 00 01 01 01 00 00 00 02 03 1f 03 01 05 00 00 00",
+      "expect": {
+        "version": 1,
+        "fields": [{ "name": "电压", "value": 1 }]
+      }
+    },
+    {
+      "name": "变长整数截断",
+      "hex": "01 00 81",
+      "expect": { "version": 1, "fields": [] }
+    }
+  ]
+}
